@@ -44,6 +44,7 @@ src
 |   |   |   |   |-- User.java
 |   |   |   |-- steps
 |   |   |   |   |-- OrderSteps.java
+|   |   |   |   |-- RestClient.java
 |   |   |   |   |-- UserSteps.java
 |-- test
 |   |-- java
