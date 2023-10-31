@@ -1,5 +1,7 @@
 package api.model;
 
+import org.junit.After;
+
 public class User {
 
     private String name;
@@ -42,4 +44,5 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-}
+    
+    }

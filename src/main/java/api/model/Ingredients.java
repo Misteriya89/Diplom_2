@@ -1,5 +1,7 @@
 package api.model;
 
+import lombok.Data;
+
 import java.util.List;
 
 public class Ingredients {

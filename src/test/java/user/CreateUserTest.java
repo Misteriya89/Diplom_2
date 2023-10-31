@@ -1,10 +1,10 @@
 package user;
 
 import api.model.User;
+import api.steps.RestClient;
 import api.steps.UserSteps;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.hamcrest.Matchers;
@@ -16,7 +16,7 @@ import java.util.Locale;
 
 import static io.restassured.RestAssured.given;
 
-public class CreateUserTest {
+public class CreateUserTest extends RestClient {
 
     private String name;
     private String email;
@@ -24,13 +24,11 @@ public class CreateUserTest {
     private UserSteps userSteps;
     private User user;
 
-    @Before
-    public void setUp() {
-        RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
-    }
+
 
     @Before
     public void createRandomData() throws InterruptedException {
+        RestClient.getBaseSpec();
         name = RandomStringUtils.randomAlphanumeric(4, 20);
         email = RandomStringUtils.randomAlphanumeric(6, 10) + "@yandex.ru";
         password = RandomStringUtils.randomAlphanumeric(10, 20);
@@ -140,8 +138,9 @@ public class CreateUserTest {
     @Description("Удаление пользователя с созданными рандомными данными")
     public void deleteRandomUser() {
         given().log().all()
-                .header("Content-Type", "application/json")
-                .body(new User(name, email, password))
-                .delete("/api/auth/user");
+                .spec(getBaseSpec())
+                .header("accessToken", "application/json")
+                .body(user)
+                .delete();
     }
-}
+    }

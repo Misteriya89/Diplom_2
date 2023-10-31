@@ -5,10 +5,10 @@ import api.model.Ingredients;
 import api.model.Order;
 import api.model.User;
 import api.steps.OrderSteps;
+import api.steps.RestClient;
 import api.steps.UserSteps;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
-import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -24,7 +24,7 @@ import java.util.Locale;
 import static io.restassured.RestAssured.given;
 
 
-public class CreateOrderTest {
+public class CreateOrderTest extends RestClient {
 
     private String name;
     private String email;
@@ -39,7 +39,7 @@ public class CreateOrderTest {
 
     @Before
     public void setUp() {
-        RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
+        RestClient.getBaseSpec();
         name = RandomStringUtils.randomAlphanumeric(4, 20);
         email = RandomStringUtils.randomAlphanumeric(6, 10) + "@ya.ru";
         password = RandomStringUtils.randomAlphanumeric(10, 20);
@@ -139,8 +139,9 @@ public class CreateOrderTest {
     @After
     public void deleteRandomUser() {
         given().log().all()
-                .header("Content-Type", "application/json")
+                .spec(getBaseSpec())
+                .header("accessToken", "application/json")
                 .body(user)
-                .delete("/api/auth/user");
+                .delete();
     }
 }

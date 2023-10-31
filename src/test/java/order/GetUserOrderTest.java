@@ -1,6 +1,7 @@
 package order;
 
 import api.model.User;
+import api.steps.RestClient;
 import api.steps.UserSteps;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
@@ -15,7 +16,7 @@ import org.junit.Test;
 
 import static io.restassured.RestAssured.given;
 
-public class GetUserOrderTest {
+public class GetUserOrderTest extends RestClient {
 
     private String email;
     private String password;
@@ -23,6 +24,7 @@ public class GetUserOrderTest {
     private UserSteps userSteps;
     private User user;
     private String accessToken;
+    private static final String ORDERS_PATH = "api/orders";
 
     @Before
     public void setUp() throws InterruptedException {
@@ -45,7 +47,7 @@ public class GetUserOrderTest {
                 .header("Content-Type", "application/json")
                 .header("authorization", accessToken)
                 .when()
-                .get("/api/orders");
+                .get(ORDERS_PATH);
         response.then().log().all()
                 .assertThat().body("success", Matchers.is(true))
                 .and().body("orders", Matchers.notNullValue())
@@ -62,7 +64,7 @@ public class GetUserOrderTest {
         Response response = given().log().all()
                 .header("Content-Type", "application/json")
                 .when()
-                .get("/api/orders");
+                .get(ORDERS_PATH);
         response.then().log().all()
                 .assertThat().body("success", Matchers.is(false))
                 .and().body("message", Matchers.is("You should be authorised"))
@@ -72,8 +74,9 @@ public class GetUserOrderTest {
     @After
     public void deleteRandomUser() {
         given().log().all()
-                .header("Content-Type", "application/json")
+                .spec(getBaseSpec())
+                .header("accessToken", "application/json")
                 .body(user)
-                .delete("/api/auth/user");
+                .delete();
     }
 }

@@ -1,6 +1,7 @@
 package user;
 
 import api.model.User;
+import api.steps.RestClient;
 import api.steps.UserSteps;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
@@ -16,7 +17,7 @@ import java.util.Locale;
 
 import static io.restassured.RestAssured.given;
 
-public class LoginUserTest {
+public class LoginUserTest extends RestClient {
 
     private String email;
     private String password;
@@ -25,9 +26,10 @@ public class LoginUserTest {
     private User user;
     private User authUser;
 
+
     @Before
     public void setUp() throws InterruptedException {
-        RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
+        RestClient.getBaseSpec();
         name = RandomStringUtils.randomAlphanumeric(4, 20);
         email = RandomStringUtils.randomAlphanumeric(6, 10) + "@yandex.ru";
         password = RandomStringUtils.randomAlphanumeric(10, 20);
@@ -104,8 +106,9 @@ public class LoginUserTest {
     @After
     public void deleteRandomUser() {
         given().log().all()
-                .header("Content-Type", "application/json")
+                .spec(getBaseSpec())
+                .header("accessToken", "application/json")
                 .body(user)
-                .delete("/api/auth/user");
+                .delete();
     }
-}
+    }
