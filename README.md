@@ -38,24 +38,23 @@ src
 |   |-- java
 |   |   |-- api
 |   |   |   |-- model
-|   |   |   |   |-- Ingredient.java
-|   |   |   |   |-- Ingredients.java
 |   |   |   |   |-- Order.java
 |   |   |   |   |-- User.java
 |   |   |   |-- steps
-|   |   |   |   |-- OrderSteps.java
-|   |   |   |   |-- RestClient.java
-|   |   |   |   |-- UserSteps.java
+|   |   |   |   |-- OrderClient.java
+|   |   |   |   |-- UserClient.java
+|   |   |   |   |-- UserCredentials.java
+|   |   |   |   |-- UserGeneration.java
 |-- test
 |   |-- java
 |   |   |-- tests
 |   |   |   |-- order
-|   |   |   |   |-- CreateOrderTest.java
-|   |   |   |   |-- GetUserOrderTest.java
+|   |   |   |   |-- CreateOrderTests.java
+|   |   |   |   |-- GetUserOrderTests.java
 |   |   |   |-- user
-|   |   |   |   |-- ChangeUserDataTest.java
-|   |   |   |   |-- CreateUserTest.java
-|   |   |   |   |-- LoginUserTest.java
+|   |   |   |   |-- AuthUserTests.java
+|   |   |   |   |-- ChangeUserTests.java
+|   |   |   |   |-- CreateUserTests.java
 .gitignore
 pom.xml
 README.md
