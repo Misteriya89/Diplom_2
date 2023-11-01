@@ -1,14 +1,14 @@
-package api.model;
+package api.steps;
 
-public class User {
+public class UserCredentials {
     private String email;
     private String name;
     private String password;
 
-    public User(String email, String name, String password) {
+    public UserCredentials(String email, String password, String name) {
         this.email = email;
-        this.name = name;
         this.password = password;
+        this.name = name;
     }
 
     public String getEmail() {
